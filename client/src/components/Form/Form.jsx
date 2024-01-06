@@ -75,27 +75,32 @@ const Form = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    const crear = await fetch(`${URL_API_PI_POKEMONS}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    dispatch(getPokemons());
-    const respuesta = await crear.json();
-    console.log(respuesta);
-    setData({
-      name: "",
-      vida: 0,
-      fuerza: 0,
-      defensa: 0,
-      velocidad: 0,
-      altura: 0,
-      peso: 0,
-      tipos: [],
-    });
+    try{
+      const crear = await fetch(`${URL_API_PI_POKEMONS}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      
+      dispatch(getPokemons());
+      const respuesta = await crear.json();
+      console.log(respuesta);
+      setData({
+        name: "",
+        vida: 0,
+        fuerza: 0,
+        defensa: 0,
+        velocidad: 0,
+        altura: 0,
+        peso: 0,
+        tipos: [],
+      });
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+    }
   };
 
   return (

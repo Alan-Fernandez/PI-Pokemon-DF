@@ -8,7 +8,7 @@ const initialState = {
     team: [],
 };
 
-const rootReducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
 switch (action.type) {
     case GET_TYPE:
     return {
@@ -51,4 +51,4 @@ switch (action.type) {
 }
 };
 
-export default rootReducer;
+export default reducer;

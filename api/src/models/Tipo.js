@@ -4,16 +4,22 @@ const { DataTypes, Sequelize } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 
 module.exports = (sequelize) => {
-    // defino el modelo
-    sequelize.define('tipo', {
-        slot: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        name: {
-            type: DataTypes.STRING,
-            unique: true,
-        }
-    });
+    // Definimos el modelo
+const Tipo = sequelize.define('tipo', {
+    slot: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    },
+    name: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,  
+    },
+});
+
+
+
+// Devolvemos el modelo Tipo
+return Tipo; 
 };
