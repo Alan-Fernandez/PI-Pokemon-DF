@@ -2,10 +2,12 @@ const { Router } = require("express");
 const fetch = require("node-fetch");
 const { Tipo } = require("../db.js");
 
+const URL_API_POKEMON_TYPES = 'https://pokeapi.co/api/v2/type';
+
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const api = await fetch('https://pokeapi.co/api/v2/type');
+    const api = await fetch(`${URL_API_POKEMON_TYPES}`);
     const types = await api.json();
     for( t of types.results ) {
         const existe = await Tipo.findOne({where: { name: t.name }})

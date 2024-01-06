@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { ordered, tipos } from "../../utils/filtros";
 
 const Pokedex = () => {
+
   let pokemons = useSelector((store) => store.pokemons);
   const type = useSelector((store) => store.type);
   const order = useSelector((store) => store.order);

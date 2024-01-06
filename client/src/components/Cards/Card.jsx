@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./card.css";
 
-export const Card = ({ array, img }) => {
+const Card = ({ array, img }) => {
   return (
     <>
       <div className="container">
@@ -43,3 +43,5 @@ export const Card = ({ array, img }) => {
     </>
   );
 };
+
+export default Card;

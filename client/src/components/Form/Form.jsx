@@ -3,6 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPokemons } from "../../redux/actions/index";
 import style from "./form.module.css";
 
+
+// import process from 'process';
+// const {
+//   URL_API_PI_POKEMONS,
+//   // URL_API_PI_TYPES
+// } = process.env;
+
+export const URL_API_PI_POKEMONS= `http://localhost:3001/pokemons`;
+
 const Form = () => {
   const dispatch = useDispatch();
   const options = useSelector((store) => store.types);
@@ -66,7 +75,7 @@ const Form = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    const crear = await fetch("https://kevindex.herokuapp.com/pokemons", {
+    const crear = await fetch(`${URL_API_PI_POKEMONS}`, {
       method: "POST",
       headers: {
         Accept: "application/json",

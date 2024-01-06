@@ -13,11 +13,11 @@ function App() {
     <div className="App">
       <Navbar/>
       <Routes>
-        <Route exact path="/pokedex/:id" element={<Pokemon />}/>
-        <Route exact path="/" element={<LandingPage/>}/>
-        <Route exact path="/home" element={<Pokedex/>}/>
-        <Route exact path="/create" element={<Create/>}/>
-        <Route exact path="/team" element={<Team/>}/>
+        <Route path="/pokedex/:id" element={<Pokemon />}/>
+        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/home" element={<Pokedex/>}/>
+        <Route path="/create" element={<Create/>}/>
+        <Route path="/team" element={<Team/>}/>
       </Routes>
     </div>
   );

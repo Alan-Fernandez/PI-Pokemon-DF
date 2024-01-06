@@ -4,14 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import style from "./pokemon.module.css";
 import Stats from "../Stats";
 
-// import process from 'process';
-// const {
-//   URL_API_PI_POKEMONS,
-//   // URL_API_PI_TYPES
-// } = process.env;
-
-export const URL_API_PI_POKEMONS= `http://localhost:3001/pokemons`; 
-// export const URL_API_PI_TYPES= `http://localhost:3001/types`; 
+export const URL_API_PI_POKEMONS = `http://localhost:3001/pokemons`;
 
 
 const Pokemon = () => {
@@ -20,13 +13,15 @@ const Pokemon = () => {
 
   const [pokemon, setPokemon] = useState({});
 
-
   const addTeam = (obj) => {
-    let array = localStorage.getItem("team") ? JSON.parse(localStorage.getItem("team")) : [];
-    array.length >= 8 && array.shift();
+    const array = localStorage.getItem("team")
+      ? JSON.parse(localStorage.getItem("team"))
+      : [];
+  
+    if (array.length >= 8) array.shift();
     array.push(obj);
     localStorage.setItem("team", JSON.stringify(array));
-    navigate("/team");
+    navigate.push("/team");
   };
 
   useEffect(() => {
@@ -35,10 +30,12 @@ const Pokemon = () => {
 
   const detalles = async () => {
     try {
-      const { data } = await axios.get(`${URL_API_PI_POKEMONS}/${id}`);
-      setPokemon(data);
+      const response = await axios.get(`${URL_API_PI_POKEMONS}/${id}`);
+      const pokemon = response.data;
+      setPokemon(pokemon);
     } catch (error) {
-      console.error("Error fetching Pokemon details:", error);
+      console.error('Error al obtener detalles del Pokémon:', error);
+      // Puedes manejar el error de acuerdo a tus necesidades
     }
   };
 
@@ -77,9 +74,8 @@ const Pokemon = () => {
 
         <div className={style.type}>
           {pokemon.type
-            ? pokemon.type.map((t) => <h3 className={style[`${t}`]} key={t}>{t}</h3>)
+            ? pokemon?.type.map((t) => <h3 className={style[`${t}`]}>{t}</h3>)
             : null}
-
         </div>
         <div className={style.meter}>
           <div className={style.type}>
