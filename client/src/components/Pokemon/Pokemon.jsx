@@ -26,7 +26,7 @@ const Pokemon = () => {
 
   useEffect(() => {
     detalles();
-  }, []);
+  },[]);
 
   const detalles = async () => {
     try {
@@ -45,7 +45,7 @@ const Pokemon = () => {
         <h1>{pokemon.name}</h1>
         <h2>#{pokemon.id}</h2>
 
-        <div class={style.pokebola}>
+        <div className={style.pokebola}>
           <p>Capturar</p>
           <button
             onClick={() => {

@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const axios = require("axios");
 // const fetch = require("node-fetch");
-const { Tipo } = require("../db.js");
+const { Type } = require("../db.js");
 
 const URL_API_POKEMON_TYPES = 'https://pokeapi.co/api/v2/type';
 
@@ -10,12 +10,12 @@ const router = Router();
 router.get('/', async (req, res) => {
     try {
         const { data } = await axios.get(`${URL_API_POKEMON_TYPES}`);
-        const types = await data.results
+        const types = await data.results;
 
         const newTypes = [];
         
-        for (t of types) {
-            const [tipo, created] = await Tipo.findOrCreate({
+        for (const t of types) {
+            const [tipo, created] = await Type.findOrCreate({
                 where: { name: t.name },
                 defaults: { name: t.name }
             });
