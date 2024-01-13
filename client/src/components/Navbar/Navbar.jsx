@@ -10,10 +10,17 @@ const Navbar = () => {
           <img src="img/logo.png" alt="" />
         </Link>
         <ul>
-            <li><Link to="/home">Pokedex</Link></li>
-            <li><Link to="/create">Create</Link></li>
-            <li><Link to="/team">My team</Link></li>
-        </ul>
+          <li>
+            <Link to="/home">Pokedex</Link>
+          </li>
+          <li>
+            <Link to="/create">Create</Link>
+          </li>
+          <li>
+            <Link to="/team">My team</Link>
+          </li>
+      </ul>
+
       </header>
     </div>
   );

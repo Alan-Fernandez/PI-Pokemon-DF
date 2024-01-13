@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const axios = require("axios");
-// const fetch = require("node-fetch");
 const { Type } = require("../db.js");
 
 const URL_API_POKEMON_TYPES = 'https://pokeapi.co/api/v2/type';
@@ -30,7 +29,7 @@ router.get('/', async (req, res) => {
         res.json(newTypes);
         
     } catch (error) {
-        console.error('Error al obtener tipos de Pokémon:', error);
+        console.error(`Error al obtener tipos de Pokémon desde ${URL_API_POKEMON_TYPES}:`, error);
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 });

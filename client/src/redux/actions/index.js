@@ -1,7 +1,7 @@
 import { ADD, BY_TYPE, FILTER, GET_NAME, GET_POKEMONS, GET_TYPE, ORDER } from './type'
+import axios from 'axios';
 // import process from 'process';
 // require('dotenv').config();
-
 
 export const URL_API_PI_POKEMONS= `http://localhost:3001/pokemons`; 
 export const URL_API_PI_TYPES= `http://localhost:3001/types`; 
@@ -13,14 +13,19 @@ export const URL_API_PI_TYPES= `http://localhost:3001/types`;
 // } = process.env;
 
 export const getTypes = () => async (dispatch) => {
-  const response = await fetch(URL_API_PI_TYPES);
-  console.log(response);
-  const data = await response.json();
-  console.log(data);
-  dispatch({
-    type: GET_TYPE,
-    payload: data,
-  });
+  try {
+    const response = await axios.get(URL_API_PI_TYPES);
+    console.log(response);
+    const data = response.data;
+    console.log(data);
+    
+    dispatch({
+      type: GET_TYPE,
+      payload: data,
+    });
+  } catch (error) {
+    console.error('Error al obtener tipos de Pokémon:', error);
+  }
 };
 
 export const getPokemons = () => async (dispatch) => {

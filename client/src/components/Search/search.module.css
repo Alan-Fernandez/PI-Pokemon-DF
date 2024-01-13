@@ -8,16 +8,18 @@
   display: flex;
   position: relative;
   margin: 5em auto;
+  border-radius: 50px;
   width: 70%;
   flex-direction: row;
-  box-shadow: 1px 1px 0 rgb(22, 160, 133), 2px 2px 0 rgb(22, 160, 133),
-    3px 3px 0 rgb(22, 160, 133), 4px 4px 0 rgb(22, 160, 133),
-    5px 5px 0 rgb(22, 160, 133), 6px 6px 0 rgb(22, 160, 133),
-    7px 7px 0 rgb(22, 160, 133);
+  box-shadow: 1px 1px 0 #212121, 2px 2px 0 #212121,
+    3px 3px 0 #212121, 4px 4px 0 #212121,
+    5px 5px 0 #212121, 6px 6px 0 #212121,
+    7px 7px 0 #212121;
 }
 
 .field > input[type="text"],
 .field > .button {
+  border-radius: 50px;
   display: block;
   font: 1.2em "Montserrat Alternates";
 }
@@ -25,15 +27,16 @@
 .field > input[type="text"] {
   flex: 1;
   padding: 0.6em;
-  border: 0.2em solid rgb(26, 188, 156);
+  border: 0.2em solid #4f5152; /* Ajustado para que coincida con el azul del menú de navegación */
 }
 
 .field > .button {
   padding: 0.6em 0.8em;
-  background-color: rgb(26, 188, 156);
+  background-color: #4f5152; /* Ajustado para que coincida con el azul del menú de navegación */
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 50px;
 }
 
 .field2 {
@@ -42,7 +45,9 @@
 
 .field2 > .button {
   padding: 0.6em 0.8em;
-  background-color: rgb(26, 188, 156);
+  background-color: #4f5152; /* Ajustado para que coincida con el azul del menú de navegación */
   color: white;
   border: none;
+  margin: 1rem;
+  border-radius: 30px;
 }

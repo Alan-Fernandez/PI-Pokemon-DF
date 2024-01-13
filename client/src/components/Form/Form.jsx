@@ -11,6 +11,8 @@ import style from "./form.module.css";
 // } = process.env;
 
 export const URL_API_PI_POKEMONS= `http://localhost:3001/pokemons`;
+const urlRegExp = /(http|https?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/;
+
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,11 @@ const Form = () => {
     let errors = {};
     if (!input.name) {
       errors.name = "El name es obligatorio";
+    }
+    if(!input.image){
+      errors.image = 'Image is required';
+    } else if (!urlRegExp.test(input.image)){
+      errors.image = 'Image URL invalid';
     }
 
     return errors;
@@ -34,33 +41,38 @@ const Form = () => {
     altura: 0,
     peso: 0,
     tipos: [],
+    image: ""
   });
 
   const [errors, setErrors] = useState({});
 
-  const handleInputChange = (e) => {
-    if (e.target.name !== "name") {
+  const handleInputChange = (event) => {
+    const { name, value } =event.target;
+
+    if (name !== "name") {
       setData({
         ...data,
-        [e.target.name]: Number(e.target.value) <= 0 ? 0 : e.target.value,
+        [name]: Number(value) <= 0 ? 0 : value,
       });
     } else {
       setErrors(
         validate({
           ...data,
-          [e.target.name]: e.target.value,
+          [name]: value,
         })
       );
       setData({
         ...data,
-        [e.target.name]: e.target.value,
+        [name]: value,
       });
     }
   };
 
-  const checkbox = (e) => {
-    if (data.tipos.includes(e.target.value)) {
-      data.tipos = data.tipos.filter((id) => id !== e.target.value);
+  const checkbox = (event) => {
+    const { value } =event.target;
+
+    if (data.tipos.includes(value)) {
+      data.tipos = data.tipos.filter((id) => id !== value);
       setData({
         ...data,
         tipos: data.tipos,
@@ -68,7 +80,7 @@ const Form = () => {
     } else {
       setData({
         ...data,
-        tipos: [...data.tipos, e.target.value],
+        tipos: [...data.tipos, value],
       });
     }
   };
@@ -97,6 +109,7 @@ const Form = () => {
         altura: 0,
         peso: 0,
         tipos: [],
+        image:''
       });
     } catch (error) {
       console.error('Error al realizar la solicitud:', error);
@@ -174,6 +187,22 @@ const Form = () => {
               onChange={handleInputChange}
             />
           </p>
+
+          <div className={style.question}>
+            <div >
+              <label >IMAGE:</label>
+              <input 
+                type="text" 
+                name="image" 
+                value={data.image}
+                onChange={handleInputChange}
+                placeholder="Link to image..."
+              />
+            </div> 
+          </div>
+          {errors.image ? 
+            <p className="danger">{errors.image}</p> 
+          : null}
         </div>
 
         <div className={style.hiddenCB}>
@@ -186,7 +215,8 @@ const Form = () => {
                   name={t.name}
                   value={t.slot}
                   id={t.slot}
-                  onChange={checkbox}
+                  checked={data.tipos.includes(t.slot.toString())}
+                  onChange={() => checkbox(t)}
                 />
                 <label htmlFor={t.slot}>{t.name}</label>
                 {t.slot % 4 === 0 ? <br /> : null}

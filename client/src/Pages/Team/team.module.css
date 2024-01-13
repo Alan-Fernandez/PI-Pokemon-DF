@@ -1,5 +1,17 @@
 .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    background-image: url("../../../public/img/coolest-poke-ball-on-starry-galaxy-r7w8578dkhu46pim.jpg");
+    background-size: cover;
+}
+
+.container_Card {
     width: 100%;
     height: 100vh;
     margin-top: 150px;
+    /* background-image: url("../../../public/img/coolest-poke-ball-on-starry-galaxy-r7w8578dkhu46pim.jpg"); */
+    /* background-size: cover; */
 }

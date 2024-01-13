@@ -1,10 +1,10 @@
 const axios = require("axios");
 const fetch = require("node-fetch");
-const { Pokemon, Tipo } = require("../db.js");
+const { Pokemon, Type } = require("../db.js");
 
 const URL_API_POKEMON = 'https://pokeapi.co/api/v2/pokemon';
-const AMOUNT_POKEMONS = 40;
-const DEFAULT_IMAGE_URL = "https://media.giphy.com/media/DRfu7BT8ZK1uo/giphy.gif";
+const AMOUNT_POKEMONS = 100;
+// const DEFAULT_IMAGE_URL = "https://media.giphy.com/media/DRfu7BT8ZK1uo/giphy.gif";
 
 
 
@@ -13,7 +13,7 @@ const info = async (by) => {
         const api = await axios.get(`${URL_API_POKEMON}?limit=${AMOUNT_POKEMONS}`);
         const data = api.data;
 
-        const bd = await Pokemon.findAll({ include: Tipo });
+        const bd = await Pokemon.findAll({ include: Type });
         let base = [...bd, ...data.results];
 
         if (by === "2") {
@@ -41,9 +41,9 @@ const info = async (by) => {
                     id: base[i].id,
                     idPoke: base[i].idPoke,
                     name: base[i].name,
-                    type: base[i].tipos.map((t) => t.name),
+                    type: base[i].types.map((t) => t.name), // Cambio aquí
                     fuerza: base[i].fuerza,
-                    img: "https://media.giphy.com/media/DRfu7BT8ZK1uo/giphy.gif",
+                    img: base[i].image,
                 });
             }
         }
@@ -62,17 +62,17 @@ const forName = async (name) => {
             where: {
                 name: name,
             },
-            include: Tipo,
+            include: Type,
         });
 
         if (db) {
             const pokemonDb = [
                 {
                     id: db.id,
-                    idPoke: db.idPoke,
+                    id: db.idPoke,
                     name: db.name,
-                    type: db.tipos.map((t) => t.name),
-                    img: "https://media.giphy.com/media/DRfu7BT8ZK1uo/giphy.gif",
+                    type: db.types.map((t) => t.name), // Cambio aquí
+                    img: db.image,
                 },
             ];
             return pokemonDb;
@@ -90,8 +90,12 @@ const forName = async (name) => {
             return pokemonName;
         }
     } catch (error) {
-        console.error('Error al obtener información de Pokémon por nombre:', error);
-        return [];
+        if (error.response && error.response.status === 404) {
+            console.error('Pokémon no encontrado.');
+        } else {
+            console.error('Error al obtener información del Pokémon:', error.message);
+        }
+        return null;
     }
 };
 
@@ -116,16 +120,19 @@ const forId = async (id) => {
 
         return pokemonId;
     } catch (error) {
-        // Handle error
+        console.error('Error al obtener información de Pokémon por ID desde la API:', error);
+    }
+    if (apiError.response && apiError.response.status === 404) {
+        console.error('Pokémon no encontrado en la API.');
     }
 
     try {
-        const db = await Pokemon.findByPk(id, { include: Tipo });
+        const db = await Pokemon.findByPk(id, { include: Type });
         const pokemonDb = {
             id: db.idPoke,
             name: db.name,
-            type: db.tipos.map((t) => t.name),
-            img: "https://media.giphy.com/media/DRfu7BT8ZK1uo/giphy.gif",
+            type: db.types.map((t) => t.name), // Cambio aquí
+            img: db.image,
             vida: db.vida,
             fuerza: db.fuerza,
             defensa: db.defensa,

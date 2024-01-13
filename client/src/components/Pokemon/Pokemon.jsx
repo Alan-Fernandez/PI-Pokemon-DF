@@ -21,7 +21,7 @@ const Pokemon = () => {
     if (array.length >= 8) array.shift();
     array.push(obj);
     localStorage.setItem("team", JSON.stringify(array));
-    navigate.push("/team");
+    navigate("/team");
   };
 
   useEffect(() => {
@@ -30,12 +30,13 @@ const Pokemon = () => {
 
   const detalles = async () => {
     try {
-      const response = await axios.get(`${URL_API_PI_POKEMONS}/${id}`);
-      const pokemon = response.data;
+      const {data} = await axios.get(`${URL_API_PI_POKEMONS}/${id}`);
+      const pokemon = data;
       setPokemon(pokemon);
+      console.log('Respuesta del servidor:', pokemon);
     } catch (error) {
       console.error('Error al obtener detalles del Pokémon:', error);
-      // Puedes manejar el error de acuerdo a tus necesidades
+      console.log(pokemon);
     }
   };
 
@@ -50,6 +51,7 @@ const Pokemon = () => {
           <button
             onClick={() => {
               addTeam({
+                key: pokemon.id,
                 id: pokemon.id,
                 name: pokemon.name,
                 type: pokemon.type,
@@ -73,10 +75,15 @@ const Pokemon = () => {
         </div>
 
         <div className={style.type}>
-          {pokemon.type
-            ? pokemon?.type.map((t) => <h3 className={style[`${t}`]}>{t}</h3>)
-            : null}
+          {pokemon.type && Array.isArray(pokemon.type) && pokemon.type.length > 0 ? (
+            pokemon.type.map((t) => (
+              <h3 key={t}  className={style[`${t}`]}>
+                {t}
+              </h3>
+            ))
+          ) : null}
         </div>
+
         <div className={style.meter}>
           <div className={style.type}>
             <Stats valor={pokemon.vida} nombre={"HP"} />
