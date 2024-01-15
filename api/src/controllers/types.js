@@ -20,12 +20,10 @@ router.get('/', async (req, res) => {
             });
 
             if (created) {
-                // Si el tipo es creado, lo agrega a la lista de nuevos tipos
                 newTypes.push(tipo);
             }
         }
 
-        // Envía la lista de nuevos tipos al cliente
         res.json(newTypes);
         
     } catch (error) {

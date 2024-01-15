@@ -29,38 +29,40 @@ export const getTypes = () => async (dispatch) => {
 };
 
 export const getPokemons = () => async (dispatch) => {
-  const response = await fetch(URL_API_PI_POKEMONS);
-  const data = await response.json();
-  dispatch({
-    type: GET_POKEMONS,
-    payload: data,
-  });
+  try {
+    const {data} = await axios.get(URL_API_PI_POKEMONS);
+    dispatch({
+      type: GET_POKEMONS,
+      payload: data,
+    });
+    
+  } catch (error) {
+    console.error('Error al obtener la lista de Pokémon:', error);
+  }
 };
 
 export const getByName = (name) => async (dispatch) => {
   try {
-    const response = await fetch(`${URL_API_PI_POKEMONS}?name=${name}`);
-    if (!response.ok) {
-      throw new Error('No se pudo obtener el Pokémon por nombre');
-    }
-    const data = await response.json();
+    const {data} = await axios.get(`${URL_API_PI_POKEMONS}?name=${name}`);
     dispatch({
       type: GET_NAME,
       payload: data,
     });
   } catch (error) {
-    console.error('Error en la solicitud de Pokémon por nombre:', error);
-    // Puedes disparar una acción para manejar el error en el estado de la aplicación si es necesario.
+   if (error.response) {
+      console.error('Error en la solicitud de Pokémon por nombre. Detalles:', error.response.data);
+    } else if (error.request) {
+      console.error('No se recibió respuesta del servidor en la solicitud de Pokémon por nombre:', error.request);
+    } else {
+      console.error('Error en la configuración de la solicitud de Pokémon por nombre:', error.message);
+    }
   }
 };
 
 export const filters = (num) => async (dispatch) => {
   try {
-    const response = await fetch(`${URL_API_PI_POKEMONS}?by=${num}`);
-    if (!response.ok) {
-      throw new Error('No se pudo aplicar el filtro');
-    }
-    const data = await response.json();
+    const { data } = await fetch(`${URL_API_PI_POKEMONS}?by=${num}`);
+    
     dispatch({
       type: FILTER,
       payload: data,

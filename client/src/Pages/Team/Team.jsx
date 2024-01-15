@@ -17,10 +17,12 @@ const Team = () => {
   return (
     <div className={style.container}>
       <div className={style.container_Card}>
-        <Card
-          array={array}
-          img={TEAM_IMAGECARGA}
-        />
+        <div className={style.card}>
+          <Card
+            array={array}
+            img={TEAM_IMAGECARGA}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,17 +1,30 @@
 .container {
     display: flex;
     justify-content: center;
+    width: 100%;
+    height: 100%;
     align-items: center;
     text-align: center;
-    height: 100vh;
     background-image: url("../../../public/img/coolest-poke-ball-on-starry-galaxy-r7w8578dkhu46pim.jpg");
     background-size: cover;
+    background-attachment: fixed;
 }
 
 .container_Card {
     width: 100%;
     height: 100vh;
-    margin-top: 150px;
-    /* background-image: url("../../../public/img/coolest-poke-ball-on-starry-galaxy-r7w8578dkhu46pim.jpg"); */
-    /* background-size: cover; */
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap; 
+}
+.container_Card .card {
+    margin: 10px; 
+}
+
+.card {
+    /* border: 1px solid #ccc; */
+    padding: 10px;
 }

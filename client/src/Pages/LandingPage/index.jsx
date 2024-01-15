@@ -20,7 +20,7 @@ const LandingPage = () => {
           <input type="submit" value="See Pokemon" className={style.myButton} />
         </Link>
 
-        <h3 className={style.love}>Hecho con &hearts; para henry</h3>
+        {/* <h3 className={style.love}>Hecho con &hearts; para henry</h3> */}
       </div>
 
       <div>

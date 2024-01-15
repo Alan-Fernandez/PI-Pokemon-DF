@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 const { Pokemon, Type } = require("../db.js");
 
 const URL_API_POKEMON = 'https://pokeapi.co/api/v2/pokemon';
-const AMOUNT_POKEMONS = 100;
+const AMOUNT_POKEMONS = 50;
 // const DEFAULT_IMAGE_URL = "https://media.giphy.com/media/DRfu7BT8ZK1uo/giphy.gif";
 
 
@@ -122,16 +122,22 @@ const forId = async (id) => {
     } catch (error) {
         console.error('Error al obtener información de Pokémon por ID desde la API:', error);
     }
-    if (apiError.response && apiError.response.status === 404) {
-        console.error('Pokémon no encontrado en la API.');
-    }
+    // if (error.response && error.response.status === 404) {
+    //     console.error('Pokémon no encontrado en la API.');
+    // }
 
     try {
         const db = await Pokemon.findByPk(id, { include: Type });
+
+        if (!db) {
+            console.error('Pokémon no encontrado en la base de datos.');
+            return null;
+        }
+
         const pokemonDb = {
             id: db.idPoke,
             name: db.name,
-            type: db.types.map((t) => t.name), // Cambio aquí
+            type: db.types.map((t) => t.name),
             img: db.image,
             vida: db.vida,
             fuerza: db.fuerza,
@@ -144,7 +150,7 @@ const forId = async (id) => {
         return pokemonDb;
     } catch (error) {
         console.error('Error al obtener información de Pokémon por ID:', error);
-        return {};
+        return null;
     }
 };
 

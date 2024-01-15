@@ -50,22 +50,24 @@ const Pokedex = () => {
   };
 
   return (
-    <div className={style.container}>
-    <div className={style.container_pokedex}>
-      <Search />
-      <div className="botones">
-        <button onClick={previusPage} className="pages">
-          &laquo; Previus
-        </button>
-        <button onClick={nextPage} className="pages">
-          Next &raquo;
-        </button>
-      </div>
-      <Card
-          array={Array.isArray(array) ? array : []}
-          img={IMAG_PNG}
-      />
-    </div>
+      <div className={style.container}>
+        <div>
+          <Search />
+          <div className="botones">
+            <button onClick={previusPage} className="pages">
+              &laquo; Previus
+            </button>
+            <button onClick={nextPage} className="pages">
+              Next &raquo;
+            </button>
+          </div>
+          <div className={style.container_pokedex}>
+            <Card
+                array={Array.isArray(array) ? array : []}
+                img={IMAG_PNG}
+            />
+          </div>
+        </div>
     </div>
   );
 };

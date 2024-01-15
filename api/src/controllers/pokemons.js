@@ -72,6 +72,10 @@ router.get("/", async (req, res) => {
       if (!pokemonInfo.length) return res.status(404).json({ info: "No se encontró el Pokémon" });
       return res.json(pokemonInfo);
     }
+    
+    if (by && !['vida', 'fuerza', 'defensa', 'velocidad', 'altura', 'peso'].includes(by)) {
+      return res.status(400).json({ error: "El parámetro 'by' es inválido" });
+    }
 
     // Obtener información general si se proporciona 'by'
     pokemonInfo = await info(by);
@@ -90,11 +94,10 @@ router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    if (!/^[1-9]\d*$/.test(id)) {
+    if (!/^[1-9]\d*$|^[a-f\d]{8}(-[a-f\d]{4}){3}-[a-f\d]{12}$/i.test(id)) {
       console.error("ID inválido:", id);
-      return res.status(400).json({ error: "El ID debe ser un número positivo" });
+      return res.status(400).json({ error: "El ID no es válido" });
     }
-
     const pokemonInfo = await forId(id);
     
     if (!pokemonInfo.id) {
@@ -104,6 +107,7 @@ router.get("/:id", async (req, res) => {
 
     console.log(`Información del Pokémon con ID ${id}:`, pokemonInfo);
     res.json(pokemonInfo);
+    
   } catch (error) {
     console.error("Error en la obtención de información del Pokémon:", error);
     res.status(500).json({ error: "Ocurrió un error al procesar la solicitud" });
@@ -134,7 +138,7 @@ router.post("/", validatePokemonData, checkPokemonExistence, async (req, res) =>
       velocidad: Number(velocidad),
       altura: Number(altura),
       peso: Number(peso),
-      image: String(image), // Agregar la propiedad 'image'
+      image: String(image),
     });
 
     // Asignar los tipos al Pokémon

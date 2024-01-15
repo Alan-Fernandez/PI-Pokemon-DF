@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./card.css";
 
-const Card = ({ array, img, key }) => {
+const Card = ({ array, img }) => {
 
   return (
     <div className="container">
@@ -12,7 +12,8 @@ const Card = ({ array, img, key }) => {
             <figure className={`card ${p.type[0]} filter:blur(5px)`}>
               <div className="cardImageContainer">
                 <img 
-                  src={p.img} alt="" 
+                  src={p.img} 
+                  alt="" 
                   className="CardImage" 
                 />
               </div>

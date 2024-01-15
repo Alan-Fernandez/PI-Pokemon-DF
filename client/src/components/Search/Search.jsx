@@ -49,8 +49,8 @@ const Search = () => {
       <div className={style.field2}>
         <select className={button} name="Type" onChange={byTipo}>
           <option value="">Tipo:</option>
-          {options?.map((p) => (
-            <option value={p.name} key={p.slot}>
+          {options?.map((p, index) => (
+            <option value={p.name} key={index}>
               {p.name}
             </option>
           ))}

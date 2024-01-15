@@ -11,7 +11,19 @@ const Pokemon = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [pokemon, setPokemon] = useState({});
+  const [pokemon, setPokemon] = useState({
+    name: "",
+    id: "",
+    img: "",
+    type: [],
+    weight: "",
+    height: "",
+    vida: 0,
+    fuerza: 0,
+    defensa: 0,
+    velocidad: 0,
+  });
+
 
   const addTeam = (obj) => {
     const array = localStorage.getItem("team")
@@ -30,13 +42,37 @@ const Pokemon = () => {
 
   const detalles = async () => {
     try {
-      const {data} = await axios.get(`${URL_API_PI_POKEMONS}/${id}`);
-      const pokemon = data;
+      const response = await axios.get(`${URL_API_PI_POKEMONS}/${id}`);
+      const pokemon = response.data;
+
+      // Verificar si la respuesta tiene la estructura esperada
+      if (!pokemon || typeof pokemon !== 'object') {
+        console.error('La respuesta del servidor no tiene el formato esperado.');
+        return;
+      }
+
+      // Verificar si hay datos del tipo de Pokemon
+      if (!pokemon.type || !Array.isArray(pokemon.type)) {
+        console.error('La respuesta del servidor no contiene información sobre el tipo del Pokémon.');
+        return;
+      }
+
+      // Actualizar el estado con los datos del Pokémon
       setPokemon(pokemon);
       console.log('Respuesta del servidor:', pokemon);
+
     } catch (error) {
-      console.error('Error al obtener detalles del Pokémon:', error);
-      console.log(pokemon);
+      // Manejo de errores específicos
+      if (error.response) {
+        // El servidor respondió con un código de estado diferente de 2xx
+        console.error('Error en la respuesta del servidor:', error.response.status, error.response.data);
+      } else if (error.request) {
+        // La solicitud fue realizada, pero no se recibió respuesta
+        console.error('Error sin respuesta del servidor:', error.request);
+      } else {
+        // Otros errores
+        console.error('Error al realizar la solicitud:', error.message);
+      }
     }
   };
 
@@ -44,7 +80,7 @@ const Pokemon = () => {
     <>
       <div className={style.container}>
         <h1>{pokemon.name}</h1>
-        <h2>#{pokemon.id}</h2>
+        <h2>{pokemon.id}</h2>
 
         <div className={style.pokebola}>
           <p>Capturar</p>
@@ -81,7 +117,7 @@ const Pokemon = () => {
                 {t}
               </h3>
             ))
-          ) : null}
+          ) : <p>No se ha definido el tipo.</p>}
         </div>
 
         <div className={style.meter}>
