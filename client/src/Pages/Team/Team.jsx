@@ -13,10 +13,19 @@ const Team = () => {
 
   const array = team().map((pokemon, index) => ({ ...pokemon, key: index }));
 
+    const handleClearTeam = () => {
+    // Eliminar el equipo del localStorage
+    localStorage.removeItem("team");
+    // Recargar la página para reflejar el cambio
+    window.location.reload();
+  };
 
   return (
+    <div>
     <div className={style.container}>
+      <div>
       <div className={style.container_Card}>
+      {/* <button onClick={handleClearTeam}>Eliminar Equipo</button> */}
         <div className={style.card}>
           <Card
             array={array}
@@ -24,6 +33,8 @@ const Team = () => {
           />
         </div>
       </div>
+      </div>
+    </div>
     </div>
   );
 };
