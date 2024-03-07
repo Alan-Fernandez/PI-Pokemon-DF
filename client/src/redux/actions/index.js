@@ -9,8 +9,9 @@ export const URL_API_PI_TYPES= `http://localhost:3001/types`;
 
 // const {
 //     URL_API_PI_POKEMONS,
-//     URL_API_PI_TYPES
+//     api
 // } = process.env;
+
 
 export const getTypes = () => async (dispatch) => {
   try {

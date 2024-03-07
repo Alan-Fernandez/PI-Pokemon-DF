@@ -1,5 +1,7 @@
 const { Router } = require("express");
+
 const { Pokemon, Type } = require("../db.js");
+
 const { info, forName, forId } = require("../utils/pokemonDataAccess.js");
 const { validatePokemonData, checkPokemonExistence } = require("../utils/pokemonMiddleware.js");
 
@@ -65,7 +67,6 @@ router.get("/:id", async (req, res) => {
 // Ruta POST para crear un nuevo Pokémon
 router.post("/", validatePokemonData, checkPokemonExistence, async (req, res) => {
   try {
-    // Extraer datos del cuerpo de la solicitud
     const { name, vida, fuerza, defensa, velocidad, altura, peso, tipos, image } = req.body;
 
     // Convertir tipos a un array de números

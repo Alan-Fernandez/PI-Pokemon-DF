@@ -11,6 +11,7 @@ import style from "./form.module.css";
 // } = process.env;
 
 export const URL_API_PI_POKEMONS= `http://localhost:3001/pokemons`;
+
 const urlRegExp = /(http|https?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/;
 
 
@@ -96,21 +97,26 @@ const Form = () => {
         },
         body: JSON.stringify(data),
       });
+      if (crear.ok) {
+        alert('¡El formulario se envió correctamente!');
+        dispatch(getPokemons());
+        const respuesta = await crear.json();
+        console.log(respuesta);
+        setData({
+          name: "",
+          vida: 0,
+          fuerza: 0,
+          defensa: 0,
+          velocidad: 0,
+          altura: 0,
+          peso: 0,
+          tipos: [],
+          image:''
+        });
+      }else{
+        alert('Error al enviar el formulario. Por favor, inténtalo de nuevo.');
+      }
       
-      dispatch(getPokemons());
-      const respuesta = await crear.json();
-      console.log(respuesta);
-      setData({
-        name: "",
-        vida: 0,
-        fuerza: 0,
-        defensa: 0,
-        velocidad: 0,
-        altura: 0,
-        peso: 0,
-        tipos: [],
-        image:''
-      });
     } catch (error) {
       console.error('Error al realizar la solicitud:', error);
     }
